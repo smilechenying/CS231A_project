@@ -48,47 +48,47 @@ for line_id in range(4, len(lines)) :
 sort_id = image_quaternion[:,0].argsort()
 image_quaternion = image_quaternion[sort_id]
 
-#%% read feature and only take the ones for 3D points
-database_path = os.path.join(image_path, 'database.db')
-
-connection = sqlite3.connect(database_path)
-cursor = connection.cursor()
-
-cameras = {}
-cursor.execute("SELECT camera_id, params FROM cameras;")
-for row in cursor:
-    camera_id = row[0]
-    params = np.fromstring(row[1], dtype=np.double)
-    cameras[camera_id] = params
-
-images = {}
-cursor.execute("SELECT image_id, camera_id, name FROM images;")
-image_id_2 = []
-for row in cursor:
-    image_id = row[0]
-    camera_id = row[1]
-    image_name_2 = row[2]
-    images[image_id] = (len(images), image_name)
-    image_id_2.append(image_id)
-
-descriptors_all = []
-keypoints_all = []
-for image_id, (image_idx, image_name_2) in images.iteritems():
-
-    cursor.execute("SELECT data FROM keypoints WHERE image_id=?;",
-                   (image_id,))
-    row = next(cursor)
-    if row[0] is None:
-        keypoints = np.zeros((0, 6), dtype=np.float32)
-        descriptors = np.zeros((0, 128), dtype=np.uint8)
-    else:
-        keypoints = np.fromstring(row[0], dtype=np.float32).reshape(-1, 6)
-        cursor.execute("SELECT data FROM descriptors WHERE image_id=?;",
-                       (image_id,))
-        row = next(cursor)
-        descriptors = np.fromstring(row[0], dtype=np.uint8).reshape(-1, 128)
-    keypoints_all.append(keypoints[:, :2])
-    descriptors_all.append(descriptors)
+##%% read feature and only take the ones for 3D points
+#database_path = os.path.join(image_path, 'database.db')
+#
+#connection = sqlite3.connect(database_path)
+#cursor = connection.cursor()
+#
+#cameras = {}
+#cursor.execute("SELECT camera_id, params FROM cameras;")
+#for row in cursor:
+#    camera_id = row[0]
+#    params = np.fromstring(row[1], dtype=np.double)
+#    cameras[camera_id] = params
+#
+#images = {}
+#cursor.execute("SELECT image_id, camera_id, name FROM images;")
+#image_id_2 = []
+#for row in cursor:
+#    image_id = row[0]
+#    camera_id = row[1]
+#    image_name_2 = row[2]
+#    images[image_id] = (len(images), image_name)
+#    image_id_2.append(image_id)
+#
+#descriptors_all = []
+#keypoints_all = []
+#for image_id, (image_idx, image_name_2) in images.iteritems():
+#
+#    cursor.execute("SELECT data FROM keypoints WHERE image_id=?;",
+#                   (image_id,))
+#    row = next(cursor)
+#    if row[0] is None:
+#        keypoints = np.zeros((0, 6), dtype=np.float32)
+#        descriptors = np.zeros((0, 128), dtype=np.uint8)
+#    else:
+#        keypoints = np.fromstring(row[0], dtype=np.float32).reshape(-1, 6)
+#        cursor.execute("SELECT data FROM descriptors WHERE image_id=?;",
+#                       (image_id,))
+#        row = next(cursor)
+#        descriptors = np.fromstring(row[0], dtype=np.uint8).reshape(-1, 128)
+#    keypoints_all.append(keypoints[:, :2])
+#    descriptors_all.append(descriptors)
 
 #%% 
 for num_valid in range(0, len(image_id_1)):

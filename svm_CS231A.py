@@ -145,7 +145,7 @@ cf_matrix = confusion_matrix(Y_test, predict_c)/np.tile(img_num_test.astype('flo
 predict_diag = np.diag(cf_matrix)/img_num_test.astype('float')
 predict_a = clf.predict(im_features)
 cf_matrix_a = confusion_matrix(Y, predict_a)/np.tile(img_num.astype('float'), (18, 1)).T
-predict_diag_a = np.diag(cf_matrix_a)/img_num.astype('float')
+predict_diag_a = np.diag(cf_matrix_a)
 
 
 fig, ax = plt.subplots()
@@ -166,7 +166,7 @@ cf_matrix = confusion_matrix(Y_test, predict_c)/np.tile(img_num_test.astype('flo
 predict_diag = np.diag(cf_matrix)/img_num_test.astype('float')
 predict_a = clf.predict(im_features)
 cf_matrix_a = confusion_matrix(Y, predict_a)/np.tile(img_num.astype('float'), (18, 1)).T
-predict_diag_a = np.diag(cf_matrix_a)/img_num.astype('float')
+predict_diag_a = np.diag(cf_matrix_a)
 
 
 fig, ax = plt.subplots()
